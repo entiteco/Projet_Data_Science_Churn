@@ -1,10 +1,10 @@
 # Système Intelligent Multi-Modèles — Rétention Client & Risque de Revenus
 
-Projet Data Science certifiant **RNCP40875 Expert en Ingénierie de Données**  
-Bloc 2 – Pilotage et implémentation de solutions IA  
+Projet Data Science certifiant **RNCP40875 Expert en Ingénierie de Données**
+Bloc 2 – Pilotage et implémentation de solutions IA
 **EFREI — Mastère DE3 M1 Data Engineering & IA 2025-2026**
 
-Étudiants : **Kévin HEUGAS** & **Valentin MASSONNIERE** — Tutrice : Zaineb MASMOUDI
+Étudiants : **Kévin HEUGAS** & **Valentin MASSONNIERE**
 
 ---
 
@@ -14,21 +14,21 @@ Dans le secteur des services, acquérir un nouveau client coûte 5 à 25 fois pl
 
 ### Ce que fait la solution
 
-| Composant | Description |
-|---|---|
-| **API FastAPI** | Micro-service d'inférence exposant le modèle ML (port 8000) |
-| **Dashboard Streamlit** | Interface décisionnelle pour les Customer Success Managers |
-| **Notebooks Jupyter** | EDA, preprocessing, entraînement et comparaison des modèles |
-| **Docker / Docker-Compose** | Environnement conteneurisé, reproductible multiplateforme |
+| Composant                         | Description                                                   |
+| --------------------------------- | ------------------------------------------------------------- |
+| **API FastAPI**             | Micro-service d'inférence exposant le modèle ML (port 8000) |
+| **Dashboard Streamlit**     | Interface décisionnelle pour les Customer Success Managers   |
+| **Notebooks Jupyter**       | EDA, preprocessing, entraînement et comparaison des modèles |
+| **Docker / Docker-Compose** | Environnement conteneurisé, reproductible multiplateforme    |
 
 ### Modèles entraînés et comparés
 
-| Modèle | Accuracy | Recall (Churn) | ROC-AUC | Retenu |
-|---|---|---|---|---|
-| Régression Logistique | 66.9% | **63.7%** | 0.714 | **Oui** |
-| Random Forest | 88.4% | 9.3% | 0.774 | Non |
-| XGBoost | 89.0% | 3.4% | **0.790** | Non |
-| Deep Learning (MLP) | 83.3% | 16.7% | 0.653 | Non |
+| Modèle                | Accuracy | Recall (Churn)  | ROC-AUC         | Retenu        |
+| ---------------------- | -------- | --------------- | --------------- | ------------- |
+| Régression Logistique | 66.9%    | **63.7%** | 0.714           | **Oui** |
+| Random Forest          | 88.4%    | 9.3%            | 0.774           | Non           |
+| XGBoost                | 89.0%    | 3.4%            | **0.790** | Non           |
+| Deep Learning (MLP)    | 83.3%    | 16.7%           | 0.653           | Non           |
 
 > **Décision métier :** La Régression Logistique a été retenue malgré une accuracy inférieure. Avec un Recall de 63.7%, c'est le seul modèle capable de détecter deux tiers des clients sur le départ — ce qui maximise le ROI des campagnes de rétention.
 
@@ -76,6 +76,7 @@ CSV brut
 - `make` (optionnel, disponible nativement sur macOS/Linux)
 
 Pour une installation **locale sans Docker** :
+
 - Python >= 3.10
 - pip
 
@@ -87,7 +88,7 @@ Pour une installation **locale sans Docker** :
 
 ```bash
 # 1. Cloner le dépôt
-git clone <url-du-repo>
+git clone <https://github.com/entiteco/Projet_Data_Science_Churn>
 cd Projet_Data_Science_Churn
 
 # 2. Construire les images
@@ -100,20 +101,21 @@ make up
 ```
 
 Les services sont accessibles à :
+
 - **API FastAPI** → http://localhost:8000
 - **Swagger UI** → http://localhost:8000/docs
 - **Jupyter Notebook** → http://localhost:8888
 
 ### Commandes Makefile disponibles
 
-| Commande | Action |
-|---|---|
-| `make build` | Construit les images Docker |
-| `make up` | Lance tous les services en arrière-plan |
-| `make down` | Arrête et supprime les conteneurs |
-| `make jupyter` | Lance uniquement Jupyter (interactif) |
-| `make api` | Lance uniquement l'API (interactif) |
-| `make bash` | Ouvre un terminal dans le conteneur |
+| Commande         | Action                                   |
+| ---------------- | ---------------------------------------- |
+| `make build`   | Construit les images Docker              |
+| `make up`      | Lance tous les services en arrière-plan |
+| `make down`    | Arrête et supprime les conteneurs       |
+| `make jupyter` | Lance uniquement Jupyter (interactif)    |
+| `make api`     | Lance uniquement l'API (interactif)      |
+| `make bash`    | Ouvre un terminal dans le conteneur      |
 
 ### Lancer le Dashboard Streamlit
 
@@ -153,17 +155,21 @@ jupyter notebook notebooks/
 ## API FastAPI — Référence des endpoints
 
 ### `GET /`
+
 Vérification que l'API répond.
 
 ### `GET /health`
+
 ```json
 { "status": "ok", "model_loaded": true }
 ```
 
 ### `POST /predict`
+
 Retourne la probabilité de churn pour un client.
 
 **Corps de la requête (JSON) :**
+
 ```json
 {
   "age": 42,
@@ -179,6 +185,7 @@ Retourne la probabilité de churn pour un client.
 ```
 
 **Réponse :**
+
 ```json
 {
   "prediction": 1,
@@ -193,51 +200,52 @@ Retourne la probabilité de churn pour un client.
 
 ## Dataset
 
-| Attribut | Valeur |
-|---|---|
-| Fichier | `data/raw/customer_churn_business_dataset.csv` |
-| Lignes | 10 000 (clients) |
-| Colonnes | 32 variables |
-| Variable cible | `churn` (binaire : 1 = résilié, 0 = actif) |
+| Attribut       | Valeur                                                  |
+| -------------- | ------------------------------------------------------- |
+| Fichier        | `data/raw/customer_churn_business_dataset.csv`        |
+| Lignes         | 10 000 (clients)                                        |
+| Colonnes       | 32 variables                                            |
+| Variable cible | `churn` (binaire : 1 = résilié, 0 = actif)          |
 | Déséquilibre | ~20% de churn (classe minoritaire) → traité par SMOTE |
 
 **Variables principales utilisées par le modèle :**
 
-| Variable | Type | Description |
-|---|---|---|
-| `age` | Numérique | Âge du client |
-| `tenure_months` | Numérique | Ancienneté en mois |
-| `contract_type` | Catégoriel | Monthly / One year / Two year |
-| `monthly_fee` | Numérique | Facture mensuelle (€) |
-| `support_tickets` | Numérique | Tickets ouverts ce mois |
-| `csat_score` | Numérique | Score de satisfaction (1–5) |
-| `payment_failures` | Numérique | Échecs de paiement récents |
-| `payment_method` | Catégoriel | Mode de règlement |
+| Variable             | Type        | Description                   |
+| -------------------- | ----------- | ----------------------------- |
+| `age`              | Numérique  | Âge du client                |
+| `tenure_months`    | Numérique  | Ancienneté en mois           |
+| `contract_type`    | Catégoriel | Monthly / One year / Two year |
+| `monthly_fee`      | Numérique  | Facture mensuelle (€)        |
+| `support_tickets`  | Numérique  | Tickets ouverts ce mois       |
+| `csat_score`       | Numérique  | Score de satisfaction (1–5)  |
+| `payment_failures` | Numérique  | Échecs de paiement récents  |
+| `payment_method`   | Catégoriel | Mode de règlement            |
 
 ---
 
 ## Stack technique
 
-| Couche | Technologie | Version |
-|---|---|---|
-| Langage | Python | 3.10 |
-| API | FastAPI + Uvicorn | 0.103.1 / 0.23.2 |
-| Dashboard | Streamlit + Plotly | ≥1.28 / ≥5.17 |
-| ML | scikit-learn | 1.4.2 |
-| Boosting | XGBoost | ≥1.7 |
-| Rééchantillonnage | imbalanced-learn (SMOTE) | 0.11.0 |
-| Interprétabilité | SHAP | ≥0.43 |
-| Sérialisation | joblib | 1.3.2 |
-| Conteneurisation | Docker + Docker-Compose | — |
+| Couche              | Technologie              | Version          |
+| ------------------- | ------------------------ | ---------------- |
+| Langage             | Python                   | 3.10             |
+| API                 | FastAPI + Uvicorn        | 0.103.1 / 0.23.2 |
+| Dashboard           | Streamlit + Plotly       | ≥1.28 / ≥5.17  |
+| ML                  | scikit-learn             | 1.4.2            |
+| Boosting            | XGBoost                  | ≥1.7            |
+| Rééchantillonnage | imbalanced-learn (SMOTE) | 0.11.0           |
+| Interprétabilité  | SHAP                     | ≥0.43           |
+| Sérialisation      | joblib                   | 1.3.2            |
+| Conteneurisation    | Docker + Docker-Compose  | —               |
 
 ---
 
 ## Dépannage
 
-**Les modèles `.joblib` ne se chargent pas**  
+**Les modèles `.joblib` ne se chargent pas**
 Vérifier que les fichiers `notebooks/modele_logreg.joblib` et `notebooks/preprocessor.joblib` existent. Si absent, relancer le notebook `modelisation.ipynb` depuis Jupyter.
 
-**Port déjà utilisé**  
+**Port déjà utilisé**
+
 ```bash
 # Vérifier quel processus utilise le port 8000
 lsof -i :8000
@@ -245,7 +253,8 @@ lsof -i :8000
 make down
 ```
 
-**Rebuild après modification du code**  
+**Rebuild après modification du code**
+
 ```bash
 make down && make build && make up
 ```

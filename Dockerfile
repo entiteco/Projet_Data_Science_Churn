@@ -1,5 +1,7 @@
 # 1. Utiliser une image Python officielle légère
-FROM python:3.10-slim
+# Python 3.12 : requis par scikit-learn 1.8 (qui a abandonné Python 3.10),
+# pour que la version installée corresponde exactement à celle des artefacts .joblib.
+FROM python:3.12-slim
 
 # 2. Définir le répertoire de travail dans le conteneur
 WORKDIR /app

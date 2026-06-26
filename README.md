@@ -17,8 +17,8 @@ Dans le secteur des services, acquérir un nouveau client coûte 5 à 25 fois pl
 | Composant                         | Description                                                   |
 | --------------------------------- | ------------------------------------------------------------- |
 | **API FastAPI**             | Micro-service d'inférence exposant le modèle ML (port 8000) |
-| **Dashboard Streamlit**     | Interface décisionnelle pour les Customer Success Managers   |
-| **Notebooks Jupyter**       | EDA, preprocessing, entraînement et comparaison des modèles |
+| **Dashboard Streamlit**     | 3 pages : simulateur client (via API), analyse globale de la base **réelle** (KPI + revenu à risque), comparaison des modèles & importance des variables |
+| **Notebooks Jupyter**       | EDA, preprocessing, entraînement, **validation croisée** et comparaison des modèles |
 | **Docker / Docker-Compose** | Environnement conteneurisé, reproductible multiplateforme    |
 
 ### Modèles entraînés et comparés
@@ -60,11 +60,12 @@ Projet_Data_Science_Churn/
 ```
 CSV brut
   └─► EDA (eda.ipynb)
-        └─► Preprocessing (SMOTE + StandardScaler + OneHotEncoder)
-              └─► Entraînement multi-modèles (modelisation.ipynb)
-                    └─► Sérialisation joblib (modele_logreg + preprocessor)
-                          └─► API FastAPI (/predict)
-                                └─► Dashboard Streamlit
+        └─► Preprocessing (StandardScaler + OneHotEncoder + SMOTE train-only)
+              └─► Entraînement multi-modèles + validation croisée 5-folds (modelisation.ipynb)
+                    └─► Interprétabilité (SHAP + importance des variables)
+                          └─► Sérialisation joblib (modele_logreg + preprocessor)
+                                └─► API FastAPI (/predict)
+                                      └─► Dashboard Streamlit (simulateur + KPI base réelle)
 ```
 
 ---

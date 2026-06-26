@@ -1,0 +1,24 @@
+# Contrôle de version / IDE
+.git/
+.gitattributes
+.gitignore
+
+# Caches Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Environnements virtuels
+venv/
+.venv/
+env/
+
+# OS
+.DS_Store
+
+# Documents lourds non nécessaires à l'exécution (~7 Mo)
+*.pdf
+
+# Orchestration locale (non utilisée dans l'image)
+docker-compose.yml
+Makefile
